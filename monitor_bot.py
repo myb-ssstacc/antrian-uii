@@ -221,16 +221,12 @@ def compute_metrics(snapshot: QueueSnapshot, my_number: int) -> dict[str, Any]:
 def render_status(sub: Subscription, snap: QueueSnapshot) -> str:
     m = compute_metrics(snap, sub.my_number)
     return (
-        f"📍 {sub.poli_label}\n"
-        f"👨‍⚕️ {sub.doctor_label}\n"
-        f"🎟️ Antrian kamu: {sub.my_number}\n\n"
-        f"Total antrian: {snap.total}\n"
-        f"Antrian saat ini: {snap.current or '-'}\n"
-        f"Menunggu (Antrian Selanjutnya): {len(snap.upcoming)}\n"
-        f"✅ Sudah check-in (tanpa *): {m['checked_in']}\n"
-        f"⏳ Belum check-in (dengan *): {m['not_checked_in']}\n"
-        f"🚀 Sisa tercepat (asumsi semua yg check-in duluan): {m['remaining_fastest']}\n"
-        f"🐢 Sisa terlama (asumsi semua sebelum nomor kamu dipanggil): {m['remaining_slowest']}"
+        f"🚀 Sisa {m['remaining_fastest']} antrian lagi! (Saat ini: {snap.current or '-'})\n"
+        f"🐢 Skenario terlama: {m['remaining_slowest']} antrian\n\n"
+        f"🎟️ Nomor Kamu: {sub.my_number}\n"
+        f"📍 {sub.poli_label} - 👨‍⚕️ {sub.doctor_label}\n"
+        f"📊 Total: {snap.total} | Menunggu: {len(snap.upcoming)}\n"
+        f"✅ Check-in: {m['checked_in']} | ⏳ Belum: {m['not_checked_in']}"
     )
 
 
